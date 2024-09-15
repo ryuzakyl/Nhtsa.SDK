@@ -1,0 +1,10 @@
+# feat|fix|ci|chore|docs|test|style|refactor|build(user|docs|christie|...): summary of your change
+
+# body
+# Root cause of error:  <reasons>
+# New change description: <features>
+
+# footer(s)
+# References JIRA-1337 | Closes #123 | Monday #456
+# BREAKING CHANGES: ticket enpoints no longer supports list all entites.
+# Co-authored-by: John Doe <john.doe@example.com>
