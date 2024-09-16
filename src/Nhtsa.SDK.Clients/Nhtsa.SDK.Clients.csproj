@@ -4,7 +4,22 @@
     <TargetFramework>net8.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
+
+    <PackageId>Nhtsa.SDK</PackageId>
+    <Description>.NET client SDK for NHTSA public APIs</Description>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <PackageLicenseFile>LICENSE</PackageLicenseFile>
+    <Version>0.0.1</Version>
+    <FileVersion>0.0.1</FileVersion>
+    <Authors>ryuzakyl</Authors>
+    <Company>ryuzakyl</Company>
+    <PackageTags>nhtsa, sdk, client</PackageTags>
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="../../README.md" Pack="true" PackagePath="" CopyToOutputDirectory="PreserveNewest" />
+    <None Include="../../LICENSE" Pack="true" PackagePath="" CopyToOutputDirectory="PreserveNewest" />
+  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="OneOf" Version="3.0.271" />
