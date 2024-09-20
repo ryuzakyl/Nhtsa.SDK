@@ -399,3 +399,6 @@ FodyWeavers.xsd
 
 # consider the csx folder inside .husky
 !.husky/csx
+
+# exclude TODO file from source control
+TODO
