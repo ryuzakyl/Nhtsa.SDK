@@ -1,6 +1,6 @@
 using OneOf;
 
-using Nhtsa.SDK.Clients.Errors;
+using Nhtsa.SDK.Errors;
 using Nhtsa.SDK.Clients.Vehicles;
 using Nhtsa.SDK.Models.Vehicles;
 
@@ -55,7 +55,7 @@ public class VehiclesClientTests
     }
 
     [Fact]
-    public async void Test_VehiclesClient_GetMakesForManufacturerAndYearAsync_ShouldFailWithEmptyArgs()
+    public async void Test_VehiclesClient_GetMakesForManufacturerAndYearAsync_ShouldFailWithWrongArgs()
     {
         VehiclesClient vc1 = new VehiclesClient();
         OneOf<ManufacturerMakesResponse, ApiError, ValidationError> result1 = await vc1.GetMakesForManufacturerAndYearAsync();
@@ -86,5 +86,32 @@ public class VehiclesClientTests
 
         Assert.NotNull(mferMakes.Results);
         Assert.NotEmpty(mferMakes.Results);
+    }
+
+    [Fact]
+    public async void Test_VehiclesClient_DecodeVinValuesBatchAsync_ShouldFailWithWrongArgs()
+    {
+        VehiclesClient vc1 = new VehiclesClient();
+        OneOf<DecodeVinFlatResponse, ApiError, ValidationError> result1 = await vc1.DecodeVinValuesBatchAsync(new List<VinData>());
+        Assert.True(result1.IsT2);
+    }
+
+    [Fact]
+    public async void Test_VehiclesClient_DecodeVinValuesBatchAsync_ShouldReturnValidResponse()
+    {
+        VehiclesClient vc = new VehiclesClient();
+
+        List<VinData> data = new List<VinData>
+        {
+            new VinData { Vin = "5UXWX7C5*BA", Year = 2011 },
+            new VinData { Vin = "5YJSA3DS*EF", Year = null },
+        };
+
+        OneOf<DecodeVinFlatResponse, ApiError, ValidationError> result = await vc.DecodeVinValuesBatchAsync(data);
+
+        Assert.True(result.IsT0);
+
+        DecodeVinFlatResponse vinFlatReponse = result.AsT0;
+        Assert.NotNull(vinFlatReponse);
     }
 }

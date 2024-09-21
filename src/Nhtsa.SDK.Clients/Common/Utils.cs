@@ -1,6 +1,6 @@
-﻿namespace Nhtsa.SDK.Clients;
+﻿namespace Nhtsa.SDK.Utils;
 
-public static class Utils
+public static class UriUtils
 {
     public static Uri GetEndpointUri(string basePath, string endpointPath, Dictionary<string, string> queryParams)
     {

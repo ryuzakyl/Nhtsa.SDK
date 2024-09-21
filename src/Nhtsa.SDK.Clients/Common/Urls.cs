@@ -1,4 +1,4 @@
-﻿namespace Nhtsa.SDK.Clients;
+﻿namespace Nhtsa.SDK.Routes;
 
 public static class Urls
 {
@@ -37,6 +37,13 @@ public static class Urls
         /// /GetMakesForManufacturerAndYear/988?year=2013&format=json
         /// </example>
         public static string GetMakesForManufacturerAndYear => "/GetMakesForManufacturerAndYear/{MANUFACTURER}";
+
+        /// <summary>
+        /// This decodes a batch of VINs that are submitted in a standardized format in a string to return multiple decodes in a flat format. The input string should be in the following format
+        ///    vin , modelYear ; vin , modelYear ; vin , modelYear ...
+        /// "modelYear" is optional, the output for each VIN decode is in the same format as produced by the "Decode VIN (flat format)" method.
+        /// </summary>
+        public static string DecodeVinValuesBatch => "/DecodeVINValuesBatch";
     }
 
     public static class RecallsApi
