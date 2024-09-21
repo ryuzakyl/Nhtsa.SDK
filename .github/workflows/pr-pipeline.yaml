@@ -1,0 +1,33 @@
+# runs for any open PR regardless of the branch name and for each push to the PR
+name: PR pipeline
+
+
+on:
+  pull_request:
+
+
+jobs:
+  build-and-test-solution:
+    name: Build and Test the project
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        dotnet-version: [ '6.0.x', '8.0.x' ]
+
+    steps:
+      - name: Checkout repository code
+        uses: actions/checkout@v4
+
+      - name: Setup dotnet ${{ matrix.dotnet-version }}
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: ${{ matrix.dotnet-version }}
+
+      - name: 📦 Restore NuGet packages dependencies
+        run: dotnet restore
+
+      - name: 🛠️ Build solution
+        run: dotnet build -c Release --no-restore
+
+      - name: 🧪 Run Unit and Integration tests
+        run: dotnet test -c Release --no-build --no-restore
