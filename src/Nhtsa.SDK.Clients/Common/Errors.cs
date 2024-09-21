@@ -1,4 +1,4 @@
-namespace Nhtsa.SDK.Clients.Errors;
+namespace Nhtsa.SDK.Errors;
 
 public class ValidationError
 {
