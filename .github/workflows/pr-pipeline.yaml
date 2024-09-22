@@ -21,6 +21,7 @@ jobs:
       - name: Setup dotnet ${{ matrix.dotnet-version }}
         uses: actions/setup-dotnet@v3
         with:
+          global-json-file: global.json
           dotnet-version: ${{ matrix.dotnet-version }}
 
       - name: 📦 Restore NuGet packages dependencies
