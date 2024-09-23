@@ -9,6 +9,9 @@
     <Description>.NET client SDK for NHTSA public APIs</Description>
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
+    <RepositoryType>git</RepositoryType>
+    <RepositoryUrl>https://github.com/ryuzakyl/Nhtsa.SDK</RepositoryUrl>
+    <PackageProjectUrl>https://ryuzakyl.github.io/Nhtsa.SDK</PackageProjectUrl>
     <Version>0.0.1</Version>
     <FileVersion>0.0.1</FileVersion>
     <Authors>ryuzakyl</Authors>
