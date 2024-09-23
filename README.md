@@ -10,17 +10,19 @@
 
 ## Usage
 
-After installing via [NuGet](https://www.nuget.org/packages/Nhtsa.SDK):
+After installing from [NuGet](https://www.nuget.org/packages/Nhtsa.SDK):
 
+Via Package Manager (PM):
 ```pwsh
-PM> Install-Package Nhtsa.SDK
+> Install-Package Nhtsa.SDK
 ```
 
+Via CMD:
 ```cmd
 > dotnet add package Nhtsa.SDK
 ```
 
-Once the package is installed, we can interact with NHTSA APIs as follows:
+We can interact with NHTSA APIs as follows:
 ```csharp
 using OneOf;
 
