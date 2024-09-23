@@ -1,4 +1,4 @@
-![Icon](./assets/images/nhtsa-logo.svg) Nhtsa.SDK
+![Icon](https://github.com/ryuzakyl/Nhtsa.SDK/blob/master/assets/images/nhtsa-logo.svg) Nhtsa.SDK
 
 **NHTSA unofficial .NET Client SDK**
 
