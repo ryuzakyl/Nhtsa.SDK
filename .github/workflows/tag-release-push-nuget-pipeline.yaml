@@ -1,0 +1,21 @@
+name: Create Tag, Release and Publish package to NuGet
+
+on:
+  workflow_dispatch:
+
+jobs:
+  create-tag:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Extract Version from .csproj
+        id: extract_version
+        run: |
+          VERSION=$(grep -oPm1 "(?<=<Version>)[^<]+" YourProject.csproj)
+          echo "PACKAGE_VERSION=${VERSION}" >> $GITHUB_ENV
+          echo "TAG_NAME=v${VERSION}" >> $GITHUB_ENV
+
+          echo $GITHUB_ENV

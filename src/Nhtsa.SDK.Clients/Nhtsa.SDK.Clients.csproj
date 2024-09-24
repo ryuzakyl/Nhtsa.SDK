@@ -8,20 +8,22 @@
     <PackageId>Nhtsa.SDK</PackageId>
     <Description>.NET client SDK for NHTSA public APIs</Description>
     <PackageReadmeFile>README.md</PackageReadmeFile>
-    <PackageLicenseFile>LICENSE</PackageLicenseFile>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <RepositoryType>git</RepositoryType>
     <RepositoryUrl>https://github.com/ryuzakyl/Nhtsa.SDK</RepositoryUrl>
     <PackageProjectUrl>https://ryuzakyl.github.io/Nhtsa.SDK</PackageProjectUrl>
-    <Version>0.0.1</Version>
+    <Version>0.0.1-alpha</Version>
     <FileVersion>0.0.1</FileVersion>
     <Authors>ryuzakyl</Authors>
     <Company>ryuzakyl</Company>
     <PackageTags>nhtsa, sdk, client</PackageTags>
+
+    <IncludeSymbols>true</IncludeSymbols>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
   </PropertyGroup>
 
   <ItemGroup>
     <None Include="../../README.md" Pack="true" PackagePath="" CopyToOutputDirectory="PreserveNewest" />
-    <None Include="../../LICENSE" Pack="true" PackagePath="" CopyToOutputDirectory="PreserveNewest" />
   </ItemGroup>
 
   <ItemGroup>
