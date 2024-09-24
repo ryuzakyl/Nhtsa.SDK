@@ -21,5 +21,8 @@ jobs:
         run: |
           TAG="v${{ env.VERSION }}"
 
+          git config user.name github-actions
+          git config user.email github-actions@github.com
+
           git tag -a "$TAG" -m "Stable $TAG"
           git push origin "$TAG"
