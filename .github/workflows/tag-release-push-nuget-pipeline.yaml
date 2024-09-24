@@ -53,27 +53,30 @@ jobs:
       - name: 🛠️ Build solution
         run: dotnet build -c Release --no-restore
 
-      # - name: Get previous tag
-      #   id: previoustag
-      #   uses: WyriHaximus/github-action-get-previous-tag@v1
-      #   env:
-      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Get previous tag
+        id: previoustag
+        uses: WyriHaximus/github-action-get-previous-tag@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      # - name: Get next minor semantic version
-      #   id: semvers
-      #   uses: "WyriHaximus/github-action-next-semvers@v1"
-      #   with:
-      #     version: ${{ steps.previoustag.outputs.tag }}
+      - name: Get next minor semantic version
+        id: semvers
+        uses: "WyriHaximus/github-action-next-semvers@v1"
+        with:
+          version: ${{ steps.previoustag.outputs.tag }}
 
       - name: Create the GitHub release
         run: |
-          gh release create "${{ env.TAG }}" --generate-notes
+          echo ${{ env.VERSION }}
+          echo ${{ env.TAG }}
+
+          gh release create ${{ steps.semvers.outputs.patch }} --generate-notes
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Upload Artifact to Release
         run: |
-          gh release upload "${{ env.TAG }}" \
+          gh release upload ${{ steps.semvers.outputs.patch }} \
             ./src/Nhtsa.SDK.Clients/bin/Release/*.nupkg \
             ./src/Nhtsa.SDK.Clients/bin/Release/*.snupkg
         env:
