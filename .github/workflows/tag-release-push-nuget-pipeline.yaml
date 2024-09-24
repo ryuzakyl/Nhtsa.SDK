@@ -14,7 +14,7 @@ jobs:
       - name: Extract Version from .csproj
         id: extract_version
         run: |
-          VERSION=$(grep -oPm1 "(?<=<Version>)[^<]+" YourProject.csproj)
+          VERSION=$(grep -oPm1 "(?<=<Version>)[^<]+" src/Nhtsa.SDK.Clients/Nhtsa.SDK.Clients.csproj)
           echo "PACKAGE_VERSION=${VERSION}" >> $GITHUB_ENV
           echo "TAG_NAME=v${VERSION}" >> $GITHUB_ENV
 
