@@ -6,9 +6,8 @@ on:
 jobs:
   create-tag:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        dotnet-version: [ '8.0.x' ]
+    permissions:
+      contents: write  # Grant write access to the repository
 
     steps:
       - name: Checkout Code
