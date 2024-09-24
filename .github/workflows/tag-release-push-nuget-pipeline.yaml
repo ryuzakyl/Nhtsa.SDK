@@ -21,8 +21,5 @@ jobs:
         run: |
           TAG="v${{ env.VERSION }}"
 
-          echo ${{ env.VERSION }}
-          echo ${{ env.TAG }}
-
-          # git tag ${{ env.TAG_NAME }}
-          # git push origin ${{ env.TAG_NAME }}
+          git tag -a "$TAG" -m "Stable $TAG"
+          git push origin "$TAG"
