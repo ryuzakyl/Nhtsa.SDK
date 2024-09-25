@@ -1,4 +1,4 @@
-![Icon](https://raw.githubusercontent.com/ryuzakyl/Nhtsa.SDK/refs/heads/master/assets/images/nhtsa-logo.svg) Nhtsa.SDK
+![Icon](https://raw.githubusercontent.com/ryuzakyl/Nhtsa.SDK/refs/heads/master/assets/images/nhtsa-brand.webp)
 
 **NHTSA unofficial .NET Client SDK**
 
@@ -8,19 +8,26 @@
 [![NuGet](https://img.shields.io/nuget/v/Nhtsa.SDK?logo=nuget)](https://www.nuget.org/packages/Nhtsa.SDK/)
 [![License](https://img.shields.io/:license-MIT-blue.svg)](https://opensource.org/licenses/mit-license.php)
 
-## Usage
+## Installation
 
-After installing from [NuGet](https://www.nuget.org/packages/Nhtsa.SDK):
+The package can be obtained from [NuGet](https://www.nuget.org/packages/Nhtsa.SDK).
 
-Via Package Manager (PM):
+Package Manager (PM):
 ```pwsh
 > Install-Package Nhtsa.SDK
 ```
 
-Via CMD:
+CMD:
 ```cmd
 > dotnet add package Nhtsa.SDK
 ```
+
+Bash:
+```bash
+$ dotnet add package Nhtsa.SDK
+```
+
+## Usage
 
 We can interact with NHTSA APIs as follows:
 ```csharp
