@@ -58,7 +58,7 @@ jobs:
           TAG="v${{ env.VERSION }}"
 
           gh release upload "$TAG" \
-            ./src/Nhtsa.SDK.Clients/bin/Release/"{{ env.VERSION }}".nupkg \
-            ./src/Nhtsa.SDK.Clients/bin/Release/"{{ env.VERSION }}".snupkg
+            ./src/Nhtsa.SDK.Clients/bin/Release/*.nupkg \
+            ./src/Nhtsa.SDK.Clients/bin/Release/*.snupkg
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
