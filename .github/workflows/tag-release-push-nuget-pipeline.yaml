@@ -68,11 +68,13 @@ jobs:
           dotnet nuget push \
             --source https://api.nuget.org/v3/index.json \
             --api-key ${{ secrets.NUGET_API_KEY }} \
+            --skip-duplicate \
             src/Nhtsa.SDK.Clients/bin/Release/*.nupkg
 
           # dotnet nuget push \
           #   --source http://localhost:5555/v3/index.json \
           #   --api-key ${{ secrets.NUGET_API_KEY }} \
+          #   --skip-duplicate \
           #   src/Nhtsa.SDK.Clients/bin/Release/*.nupkg
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
