@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  create-tag:
+  create-tag-release-and-push-to-nuget:
     runs-on: ubuntu-latest
     permissions:
       contents: write  # Grant write access to the repository
@@ -55,6 +55,7 @@ jobs:
       - name: Upload Artifact to Release
         run: |
           TAG="v${{ env.VERSION }}"
+          ll
 
           gh release upload "$TAG" \
             ./src/Nhtsa.SDK.Clients/bin/Release/*.nupkg \
