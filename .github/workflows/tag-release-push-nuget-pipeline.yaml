@@ -4,18 +4,77 @@ on:
   workflow_dispatch:
 
 jobs:
-  create-tag:
+  create-tag-release-and-push-to-nuget:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write  # Grant write access to the repository
 
     steps:
       - name: Checkout Code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GH_PAT }}
 
       - name: Extract Version from .csproj
-        id: extract_version
+        id: extract-version
         run: |
-          VERSION=$(grep -oPm1 "(?<=<Version>)[^<]+" YourProject.csproj)
-          echo "PACKAGE_VERSION=${VERSION}" >> $GITHUB_ENV
-          echo "TAG_NAME=v${VERSION}" >> $GITHUB_ENV
+          VERSION=$(grep -oPm1 "(?<=<Version>)[^<]+" src/Nhtsa.SDK.Clients/Nhtsa.SDK.Clients.csproj)
+          echo "VERSION=$VERSION" >> $GITHUB_ENV
 
-          echo $GITHUB_ENV
+      - name: 🛠️ Setup dotnet ${{ matrix.dotnet-version }}
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: '8.x'
+
+      - name: 📦 Restore NuGet packages dependencies
+        run: dotnet restore
+
+      - name: 🛠️ Build solution
+        run: dotnet build -c Release --no-restore
+
+      - name: 📦 Generate NuGet package
+        run: dotnet pack -c Release --no-build
+
+      - name: Create tag and push it
+        run: |
+          TAG="v${{ env.VERSION }}"
+
+          git config user.name github-actions
+          git config user.email github-actions@github.com
+
+          git tag -a "$TAG" -m "Stable $TAG"
+          git push origin "$TAG"
+
+      - name: Create the GitHub release
+        run: |
+          TAG="v${{ env.VERSION }}"
+
+          gh release create "$TAG" --generate-notes
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Upload artifacts to the release
+        run: |
+          TAG="v${{ env.VERSION }}"
+
+          gh release upload "$TAG" \
+            ./src/Nhtsa.SDK.Clients/bin/Release/*.nupkg \
+            ./src/Nhtsa.SDK.Clients/bin/Release/*.snupkg
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Push to NuGet
+        run: |
+          dotnet nuget push \
+            --source https://api.nuget.org/v3/index.json \
+            --api-key ${{ secrets.NUGET_API_KEY }} \
+            --skip-duplicate \
+            src/Nhtsa.SDK.Clients/bin/Release/*.nupkg
+
+          # dotnet nuget push \
+          #   --source http://localhost:5555/v3/index.json \
+          #   --api-key ${{ secrets.NUGET_API_KEY }} \
+          #   --skip-duplicate \
+          #   src/Nhtsa.SDK.Clients/bin/Release/*.nupkg
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
