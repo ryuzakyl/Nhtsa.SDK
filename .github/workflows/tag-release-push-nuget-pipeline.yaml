@@ -24,8 +24,6 @@ jobs:
       - name: 🛠️ Setup dotnet ${{ matrix.dotnet-version }}
         uses: actions/setup-dotnet@v3
         with:
-          # global-json-file: global.json
-          # dotnet-version: ${{ matrix.dotnet-version }}
           dotnet-version: '8.x'
 
       - name: 📦 Restore NuGet packages dependencies
@@ -58,10 +56,9 @@ jobs:
       - name: Upload Artifact to Release
         run: |
           TAG="v${{ env.VERSION }}"
-          ls -la ./src/Nhtsa.SDK.Clients/bin/Release
 
           gh release upload "$TAG" \
-            ./src/Nhtsa.SDK.Clients/bin/Release/*.nupkg \
-            ./src/Nhtsa.SDK.Clients/bin/Release/*.snupkg
+            ./src/Nhtsa.SDK.Clients/bin/Release/{{ env.VERSION }}.nupkg \
+            ./src/Nhtsa.SDK.Clients/bin/Release/{{ env.VERSION }}.snupkg
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
