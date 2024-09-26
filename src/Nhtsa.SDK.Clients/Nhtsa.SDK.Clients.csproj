@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFrameworks>net6.0;net8.0</TargetFrameworks>
@@ -12,7 +12,7 @@
     <RepositoryType>git</RepositoryType>
     <RepositoryUrl>https://github.com/ryuzakyl/Nhtsa.SDK</RepositoryUrl>
     <PackageProjectUrl>https://ryuzakyl.github.io/Nhtsa.SDK</PackageProjectUrl>
-    <Version>0.0.1-alpha</Version>
+    <Version>0.0.1</Version>
     <Authors>ryuzakyl</Authors>
     <Company>ryuzakyl</Company>
     <PackageTags>nhtsa, sdk, client</PackageTags>
