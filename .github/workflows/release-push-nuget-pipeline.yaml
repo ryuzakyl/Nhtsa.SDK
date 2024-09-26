@@ -1,0 +1,66 @@
+name: Create Release and Publish package to NuGet
+
+on:
+  workflow_dispatch:
+    inputs:
+      TAG:
+        description: 'Tag to be used (e.g., v1.0.0)'
+        required: true
+        default: ''
+
+jobs:
+  create-release-and-push-to-nuget:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write  # Grant write access to the repository
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GH_PAT }}
+          ref: '${{ github.event.inputs.TAG }}'
+
+      - name: 🛠️ Setup dotnet ${{ matrix.dotnet-version }}
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: '8.x'
+
+      - name: 📦 Restore NuGet packages dependencies
+        run: dotnet restore
+
+      - name: 🛠️ Build solution
+        run: dotnet build -c Release --no-restore
+
+      - name: 📦 Generate NuGet package
+        run: dotnet pack -c Release --no-build
+
+      - name: Create the GitHub release
+        run: |
+          gh release create '${{ github.event.inputs.TAG }}' --generate-notes
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Upload artifacts to the release
+        run: |
+          gh release upload '${{ github.event.inputs.TAG }}' \
+            ./src/Nhtsa.SDK.Clients/bin/Release/*.nupkg \
+            ./src/Nhtsa.SDK.Clients/bin/Release/*.snupkg
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Push to NuGet
+        run: |
+          dotnet nuget push \
+            --source https://api.nuget.org/v3/index.json \
+            --api-key ${{ secrets.NUGET_API_KEY }} \
+            --skip-duplicate \
+            src/Nhtsa.SDK.Clients/bin/Release/*.nupkg
+
+          # dotnet nuget push \
+          #   --source http://localhost:5555/v3/index.json \
+          #   --api-key ${{ secrets.NUGET_API_KEY }} \
+          #   --skip-duplicate \
+          #   src/Nhtsa.SDK.Clients/bin/Release/*.nupkg
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
