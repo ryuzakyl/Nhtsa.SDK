@@ -8,6 +8,128 @@ namespace Nhtsa.SDK.Tests;
 
 public class VehiclesClientTests
 {
+
+    [Fact]
+    public async void Test_VehiclesClient_DecodeVinAsync_ShouldFailWithWrongArgs()
+    {
+        VehiclesClient vc1 = new VehiclesClient();
+        OneOf<DecodeVinResponse, ApiError, ValidationError> result1 = await vc1.DecodeVinAsync(string.Empty, year: 2011);
+        Assert.True(result1.IsT2);
+
+        VehiclesClient vc2 = new VehiclesClient();
+        OneOf<DecodeVinResponse, ApiError, ValidationError> result2 = await vc2.DecodeVinAsync("5UXWX7C5*BA", year: 0);
+        Assert.True(result2.IsT2);
+    }
+
+    [Fact]
+    public async void Test_VehiclesClient_DecodeVinAsync_ShouldReturnValidResponse()
+    {
+        VehiclesClient vc = new VehiclesClient();
+
+        OneOf<DecodeVinResponse, ApiError, ValidationError> result = await vc.DecodeVinAsync("5UXWX7C5*BA", year: 2011);
+
+        Assert.True(result.IsT0);
+
+        DecodeVinResponse vinVariables = result.AsT0;
+        Assert.NotNull(vinVariables);
+
+        Assert.True(vinVariables.Count > 0, "VinVariables count should be greater than 0.");
+
+        Assert.NotNull(vinVariables.Results);
+        Assert.NotEmpty(vinVariables.Results);
+    }
+
+    [Fact]
+    public async void Test_VehiclesClient_DecodeVinValuesAsync_ShouldFailWithWrongArgs()
+    {
+        VehiclesClient vc1 = new VehiclesClient();
+        OneOf<DecodeVinFlatResponse, ApiError, ValidationError> result1 = await vc1.DecodeVinValuesAsync(string.Empty, year: 2011);
+        Assert.True(result1.IsT2);
+
+        VehiclesClient vc2 = new VehiclesClient();
+        OneOf<DecodeVinFlatResponse, ApiError, ValidationError> result2 = await vc2.DecodeVinValuesAsync("5UXWX7C5*BA", year: 0);
+        Assert.True(result2.IsT2);
+    }
+
+    [Fact]
+    public async void Test_VehiclesClient_DecodeVinValuesAsync_ShouldReturnValidResponse()
+    {
+        VehiclesClient vc = new VehiclesClient();
+
+        OneOf<DecodeVinFlatResponse, ApiError, ValidationError> result = await vc.DecodeVinValuesAsync("5UXWX7C5*BA", year: 2011);
+
+        Assert.True(result.IsT0);
+
+        DecodeVinFlatResponse vinValues = result.AsT0;
+        Assert.NotNull(vinValues);
+
+        Assert.True(vinValues.Count > 0, "VinValuesFlat count should be greater than 0.");
+
+        Assert.NotNull(vinValues.Results);
+        Assert.NotEmpty(vinValues.Results);
+    }
+
+    [Fact]
+    public async void Test_VehiclesClient_DecodeVinExtendedAsync_ShouldFailWithWrongArgs()
+    {
+        VehiclesClient vc1 = new VehiclesClient();
+        OneOf<DecodeVinResponse, ApiError, ValidationError> result1 = await vc1.DecodeVinExtendedAsync(string.Empty, year: 2011);
+        Assert.True(result1.IsT2);
+
+        VehiclesClient vc2 = new VehiclesClient();
+        OneOf<DecodeVinResponse, ApiError, ValidationError> result2 = await vc2.DecodeVinExtendedAsync("5UXWX7C5*BA", year: 0);
+        Assert.True(result2.IsT2);
+    }
+
+    [Fact]
+    public async void Test_VehiclesClient_DecodeVinExtendedAsync_ShouldReturnValidResponse()
+    {
+        VehiclesClient vc = new VehiclesClient();
+
+        OneOf<DecodeVinResponse, ApiError, ValidationError> result = await vc.DecodeVinExtendedAsync("5UXWX7C5*BA", year: 2011);
+
+        Assert.True(result.IsT0);
+
+        DecodeVinResponse vinVariables = result.AsT0;
+        Assert.NotNull(vinVariables);
+
+        Assert.True(vinVariables.Count > 0, "VinExtended count should be greater than 0.");
+
+        Assert.NotNull(vinVariables.Results);
+        Assert.NotEmpty(vinVariables.Results);
+    }
+
+    [Fact]
+    public async void Test_VehiclesClient_DecodeVinValuesExtendedAsync_ShouldFailWithWrongArgs()
+    {
+        VehiclesClient vc1 = new VehiclesClient();
+        OneOf<DecodeVinFlatResponse, ApiError, ValidationError> result1 = await vc1.DecodeVinValuesExtendedAsync(string.Empty, year: 2011);
+        Assert.True(result1.IsT2);
+
+        VehiclesClient vc2 = new VehiclesClient();
+        OneOf<DecodeVinFlatResponse, ApiError, ValidationError> result2 = await vc2.DecodeVinValuesExtendedAsync("5UXWX7C5*BA", year: 0);
+        Assert.True(result2.IsT2);
+    }
+
+    [Fact]
+    public async void Test_VehiclesClient_DecodeVinValuesExtendedAsync_ShouldReturnValidResponse()
+    {
+        VehiclesClient vc = new VehiclesClient();
+
+        OneOf<DecodeVinFlatResponse, ApiError, ValidationError> result = await vc.DecodeVinValuesExtendedAsync("5UXWX7C5*BA", year: 2011);
+
+        Assert.True(result.IsT0);
+
+        DecodeVinFlatResponse vinValuesExtended = result.AsT0;
+        Assert.NotNull(vinValuesExtended);
+
+        Assert.True(vinValuesExtended.Count > 0, "VinValuesExtendedFlat count should be greater than 0.");
+
+        Assert.NotNull(vinValuesExtended.Results);
+        Assert.NotEmpty(vinValuesExtended.Results);
+    }
+
+
     [Fact]
     public async void Test_VehiclesClient_GetAllMakesAsync_ShouldReturnValidResponse()
     {

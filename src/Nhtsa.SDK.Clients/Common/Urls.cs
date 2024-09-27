@@ -7,6 +7,43 @@ public static class Urls
         public static string BaseUrl => "https://vpic.nhtsa.dot.gov/api/vehicles/";
 
         /// <summary>
+        /// The Decode VIN API will decode the VIN and the decoded output will be made available in the format of
+        /// Key-value pairs. The IDs (VariableID and ValueID) represent the unique ID associated with the
+        /// Variable/Value. In case of text variables, the ValueID is not applicable.
+        /// 
+        /// Model Year in the request allows for the decoding to specifically be done in the current, or older
+        /// (pre-1980), model year ranges. It is recommended to always send in the model year. This API also
+        /// supports partial VIN decoding (VINs that are less than 17 characters).
+        /// 
+        /// In this case, the VIN will be decoded partially with the available characters. In case of partial VINs,
+        /// a "*" could be used to indicate the unavailable characters. The 9th digit is not necessary.
+        /// </summary>
+        public static string DecodeVin => "/DecodeVin/{VIN}";
+
+        /// <summary>
+        /// The Decode VIN Flat Format API will decode the VIN and the decoded output will be made available in a
+        /// flat file format. Model Year in the request allows for the decoding to specifically be done in the
+        /// current, or older (pre-1980), model year ranges. It is recommended to always send in the model year.
+        /// 
+        /// This API also supports partial VIN decoding (VINs that are less than 17 characters). In this case, the
+        /// VIN will be decoded partially with the available characters. In case of partial VINs, a "*" could be
+        /// used to indicate the unavailable characters.
+        /// </summary>
+        public static string DecodeVinValues => "/DecodeVinValues/{VIN}";
+
+        /// <summary>
+        /// This is exactly like the Decode VIN method but provides additional information on variables related
+        /// to other NHTSA programs like NCSA etc.
+        /// </summary>
+        public static string DecodeVinExtended => "/DecodeVinExtended/{VIN}";
+
+        /// <summary>
+        /// This is exactly like the Decode VIN (flat format) method but provides additional information on
+        /// variables related to other NHTSA programs like NCSA etc.
+        /// </summary>
+        public static string DecodeVinValuesExtended => "/DecodeVinValuesExtended/{VIN}";
+
+        /// <summary>
         /// This provides a list of all the Makes available in vPIC Dataset.
         /// </summary>
         /// <example>
