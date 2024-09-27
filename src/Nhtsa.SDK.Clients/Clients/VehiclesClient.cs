@@ -1,10 +1,10 @@
 ﻿using OneOf;
-using System.Text.Json;
 
 using Nhtsa.SDK.Configs;
 using Nhtsa.SDK.Errors;
 using Nhtsa.SDK.Utils;
 using Nhtsa.SDK.Routes;
+using Nhtsa.SDK.Extensions;
 using Nhtsa.SDK.Clients.Parsing;
 
 
@@ -22,6 +22,250 @@ public class VehiclesClient
         {
             DefaultRequestHeaders = { { "Accept", "application/json" } }
         };
+    }
+
+    public async Task<OneOf<DecodeVinResponse, ApiError, ValidationError>> DecodeVinAsync(string vin, int? year = null)
+    {
+        if (string.IsNullOrEmpty(vin))
+        {
+            return new ValidationError { Message = "Parameter 'VIN' must be specified" };
+        }
+
+        if (year != null && year <= 0)
+        {
+            return new ValidationError { Message = "Parameter 'year' must have a proper value" };
+        }
+
+        try
+        {
+            // get full url
+            Uri uri = UriUtils.GetEndpointUri(
+                Urls.VehiclesApi.BaseUrl,
+                Urls.VehiclesApi.DecodeVin.UriReplace(new Dictionary<string, object> {
+                    { "VIN", vin }
+                }),
+                ApiConfigs.DefaultQueryDict.ConcatQueryParams(new Dictionary<string, object?>
+                {
+                    { "modelyear", year }
+                })
+            );
+
+            var httpResponse = await _httpClient.GetAsync(uri.ToString());
+
+            if (!httpResponse.IsSuccessStatusCode)
+            {
+                return new ApiError
+                {
+                    Message = "Failed to fetch 'DecodeVin' data",
+                    Details = $"Status code: {httpResponse.StatusCode}"
+                };
+            }
+
+            // deserialize the API data
+            var content = await httpResponse.Content.ReadAsStringAsync();
+            DecodeVinResponse? response = NhtsaResponseParser.Parse<DecodeVinResponse>(content, ApiConfigs.ContentTypeFmt);
+
+            if (response is null)
+            {
+                // Return an error if deserialization fails
+                return new ApiError { Message = "Content deserialization failed", Details = "None" };
+            }
+
+            return response;
+        }
+        catch (HttpRequestException ex)
+        {
+            ApiError error = new ApiError
+            {
+                Message = "Unexpected error fetching 'DecodeVin' API data",
+                Details = ex.Message
+            };
+
+            return error;
+        }
+    }
+
+    public async Task<OneOf<DecodeVinFlatResponse, ApiError, ValidationError>> DecodeVinValuesAsync(string vin, int? year = null)
+    {
+        if (string.IsNullOrEmpty(vin))
+        {
+            return new ValidationError { Message = "Parameter 'VIN' must be specified" };
+        }
+
+        if (year != null && year <= 0)
+        {
+            return new ValidationError { Message = "Parameter 'year' must have a proper value" };
+        }
+
+        try
+        {
+            // get full url
+            Uri uri = UriUtils.GetEndpointUri(
+                Urls.VehiclesApi.BaseUrl,
+                Urls.VehiclesApi.DecodeVinValues.UriReplace(new Dictionary<string, object> {
+                    { "VIN", vin }
+                }),
+                ApiConfigs.DefaultQueryDict.ConcatQueryParams(new Dictionary<string, object?>
+                {
+                    { "modelyear", year }
+                })
+            );
+
+            var httpResponse = await _httpClient.GetAsync(uri.ToString());
+
+            if (!httpResponse.IsSuccessStatusCode)
+            {
+                return new ApiError
+                {
+                    Message = "Failed to fetch 'DecodeVinValues' data",
+                    Details = $"Status code: {httpResponse.StatusCode}"
+                };
+            }
+
+            // deserialize the API data
+            var content = await httpResponse.Content.ReadAsStringAsync();
+            DecodeVinFlatResponse? response = NhtsaResponseParser.Parse<DecodeVinFlatResponse>(content, ApiConfigs.ContentTypeFmt);
+
+            if (response is null)
+            {
+                // Return an error if deserialization fails
+                return new ApiError { Message = "Content deserialization failed", Details = "None" };
+            }
+
+            return response;
+        }
+        catch (HttpRequestException ex)
+        {
+            ApiError error = new ApiError
+            {
+                Message = "Unexpected error fetching 'DecodeVinValues' API data",
+                Details = ex.Message
+            };
+
+            return error;
+        }
+    }
+
+    public async Task<OneOf<DecodeVinResponse, ApiError, ValidationError>> DecodeVinExtendedAsync(string vin, int? year = null)
+    {
+        if (string.IsNullOrEmpty(vin))
+        {
+            return new ValidationError { Message = "Parameter 'VIN' must be specified" };
+        }
+
+        if (year != null && year <= 0)
+        {
+            return new ValidationError { Message = "Parameter 'year' must have a proper value" };
+        }
+
+        try
+        {
+            // get full url
+            Uri uri = UriUtils.GetEndpointUri(
+                Urls.VehiclesApi.BaseUrl,
+                Urls.VehiclesApi.DecodeVinExtended.UriReplace(new Dictionary<string, object> {
+                    { "VIN", vin }
+                }),
+                ApiConfigs.DefaultQueryDict.ConcatQueryParams(new Dictionary<string, object?>
+                {
+                    { "modelyear", year }
+                })
+            );
+
+            var httpResponse = await _httpClient.GetAsync(uri.ToString());
+
+            if (!httpResponse.IsSuccessStatusCode)
+            {
+                return new ApiError
+                {
+                    Message = "Failed to fetch 'DecodeVinExtended' data",
+                    Details = $"Status code: {httpResponse.StatusCode}"
+                };
+            }
+
+            // deserialize the API data
+            var content = await httpResponse.Content.ReadAsStringAsync();
+            DecodeVinResponse? response = NhtsaResponseParser.Parse<DecodeVinResponse>(content, ApiConfigs.ContentTypeFmt);
+
+            if (response is null)
+            {
+                // Return an error if deserialization fails
+                return new ApiError { Message = "Content deserialization failed", Details = "None" };
+            }
+
+            return response;
+        }
+        catch (HttpRequestException ex)
+        {
+            ApiError error = new ApiError
+            {
+                Message = "Unexpected error fetching 'DecodeVinExtended' API data",
+                Details = ex.Message
+            };
+
+            return error;
+        }
+    }
+
+    public async Task<OneOf<DecodeVinFlatResponse, ApiError, ValidationError>> DecodeVinValuesExtendedAsync(string vin, int? year = null)
+    {
+        if (string.IsNullOrEmpty(vin))
+        {
+            return new ValidationError { Message = "Parameter 'VIN' must be specified" };
+        }
+
+        if (year != null && year <= 0)
+        {
+            return new ValidationError { Message = "Parameter 'year' must have a proper value" };
+        }
+
+        try
+        {
+            // get full url
+            Uri uri = UriUtils.GetEndpointUri(
+                Urls.VehiclesApi.BaseUrl,
+                Urls.VehiclesApi.DecodeVinValuesExtended.UriReplace(new Dictionary<string, object> {
+                    { "VIN", vin }
+                }),
+                ApiConfigs.DefaultQueryDict.ConcatQueryParams(new Dictionary<string, object?>
+                {
+                    { "modelyear", year }
+                })
+            );
+
+            var httpResponse = await _httpClient.GetAsync(uri.ToString());
+
+            if (!httpResponse.IsSuccessStatusCode)
+            {
+                return new ApiError
+                {
+                    Message = "Failed to fetch 'DecodeVinValuesExtended' data",
+                    Details = $"Status code: {httpResponse.StatusCode}"
+                };
+            }
+
+            // deserialize the API data
+            var content = await httpResponse.Content.ReadAsStringAsync();
+            DecodeVinFlatResponse? response = NhtsaResponseParser.Parse<DecodeVinFlatResponse>(content, ApiConfigs.ContentTypeFmt);
+
+            if (response is null)
+            {
+                // Return an error if deserialization fails
+                return new ApiError { Message = "Content deserialization failed", Details = "None" };
+            }
+
+            return response;
+        }
+        catch (HttpRequestException ex)
+        {
+            ApiError error = new ApiError
+            {
+                Message = "Unexpected error fetching 'DecodeVinValuesExtended' API data",
+                Details = ex.Message
+            };
+
+            return error;
+        }
     }
 
     public async Task<OneOf<GetAllMakesResponse, ApiError>> GetAllMakesAsync()
@@ -125,27 +369,27 @@ public class VehiclesClient
 
     public async Task<OneOf<ManufacturerMakesResponse, ApiError, ValidationError>> GetMakesForManufacturerAndYearAsync(string manufacturer = "", int year = 0)
     {
+        if (string.IsNullOrEmpty(manufacturer))
+        {
+            return new ValidationError { Message = "Parameter 'Manufacturer' must be specified" };
+        }
+
+        if (year <= 0)
+        {
+            return new ValidationError { Message = "Parameter 'year' must be specified" };
+        }
+
         try
         {
-            if (string.IsNullOrEmpty(manufacturer))
-            {
-                return new ValidationError { Message = "Parameter 'Manufacturer' must be specified" };
-            }
-
-            if (year <= 0)
-            {
-                return new ValidationError { Message = "Parameter 'year' must be specified" };
-            }
-
             // get full url
             Uri uri = UriUtils.GetEndpointUri(
                 Urls.VehiclesApi.BaseUrl,
                 Urls.VehiclesApi.GetMakesForManufacturerAndYear.UriReplace(new Dictionary<string, object> {
                     { "MANUFACTURER", manufacturer }
                 }),
-                ApiConfigs.DefaultQueryDict.ConcatQueryParams(new Dictionary<string, object>
+                ApiConfigs.DefaultQueryDict.ConcatQueryParams(new Dictionary<string, object?>
                 {
-                    {"year", year}
+                    { "year", year }
                 })
             );
 
