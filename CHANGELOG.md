@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [versionize](https://github.com/versionize/versionize) for commit guidelines.
 
+<a name="0.1.0"></a>
+## [0.1.0](https://www.github.com/ryuzakyl/Nhtsa.SDK/releases/tag/v0.1.0) (2024-09-26)
+
+### Features
+
+* **vehicles:** add implementation for DecodeVIN related endpoints ([73eedbc](https://www.github.com/ryuzakyl/Nhtsa.SDK/commit/73eedbc93b8852d96bdee42eef2ccca29669ba02))
+
 <a name="0.0.1"></a>
 ## [0.0.1](https://www.github.com/ryuzakyl/Nhtsa.SDK/releases/tag/v0.0.1) (2024-09-25)
 
