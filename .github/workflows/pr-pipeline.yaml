@@ -36,7 +36,7 @@ jobs:
       - name: 🗒️ Initialize CodeQL
         uses: github/codeql-action/init@v2
         with:
-          languages: dotnet
+          languages: csharp
 
       - name: 🗒️ Perform CodeQL Analysis
         uses: github/codeql-action/analyze@v2
