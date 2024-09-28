@@ -1,18 +1,19 @@
 # runs for any open PR regardless of the branch name and for each push to the PR
 name: PR pipeline
 
-
-on:
+'on':
   pull_request:
 
-
+    null
 jobs:
   build-and-test-solution:
     name: Build and Test the project
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        dotnet-version: [ '6.0.x', '8.0.x' ]
+        dotnet-version:
+          - 6.0.x
+          - 8.0.x
 
     steps:
       - name: Checkout repository code
@@ -33,7 +34,5 @@ jobs:
       - name: 🧪 Run Unit and Integration tests
         run: dotnet test -c Release --no-build --no-restore
 
-      - name: 🛡️ GitGuardian Scan
-        uses: GitGuardian/ggshield-action@v1
-        with:
-          args: scan repo .
+      - name: 🛡️ Security scanning with Trufflehog
+        uses: edplato/trufflehog-actions-scan@master
