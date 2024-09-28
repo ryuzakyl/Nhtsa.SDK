@@ -18,10 +18,10 @@ jobs:
     steps:
       - name: Checkout repository code
         uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
+        # with:
+        #   fetch-depth: 0
           # necessary for pull request workflow trigger
-          ref: ${{ github.head_ref }}
+          # ref: ${{ github.head_ref }}
 
       - name: 🛠️ Setup dotnet ${{ matrix.dotnet-version }}
         uses: actions/setup-dotnet@v3
@@ -38,5 +38,9 @@ jobs:
       - name: 🧪 Run Unit and Integration tests
         run: dotnet test -c Release --no-build --no-restore
 
-      - name: 🛡️ Security scanning with Trufflehog
+      - name: 🛡️ Security scanning with TruffleHog (Filesystem Scan)
         uses: edplato/trufflehog-actions-scan@master
+        with:
+          scan_type: filesystem
+          scan_path: .
+
