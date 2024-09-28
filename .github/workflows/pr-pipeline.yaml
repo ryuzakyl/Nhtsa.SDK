@@ -39,8 +39,7 @@ jobs:
         run: dotnet test -c Release --no-build --no-restore
 
       - name: 🛡️ Security scanning with TruffleHog (Filesystem Scan)
-        uses: edplato/trufflehog-actions-scan@master
+        uses: trufflesecurity/trufflehog-actions-scan@v3
         with:
-          scan_type: filesystem
-          scan_path: .
-
+          scan: filesystem
+          directory: .
