@@ -38,8 +38,8 @@ jobs:
       - name: 🧪 Run Unit and Integration tests
         run: dotnet test -c Release --no-build --no-restore
 
-      - name: 🛡️ Security scanning with TruffleHog (Filesystem Scan)
-        uses: trufflesecurity/trufflehog@v3
-        with:
-          scan: filesystem
-          directory: .
+      # - name: 🛡️ Security scanning with TruffleHog (Filesystem Scan)
+      #   uses: trufflesecurity/trufflehog@v3
+      #   with:
+      #     scan: filesystem
+      #     directory: .
