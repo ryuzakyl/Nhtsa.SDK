@@ -18,6 +18,10 @@ jobs:
     steps:
       - name: Checkout repository code
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          # necessary for pull request workflow trigger
+          ref: ${{ github.head_ref }}
 
       - name: 🛠️ Setup dotnet ${{ matrix.dotnet-version }}
         uses: actions/setup-dotnet@v3
