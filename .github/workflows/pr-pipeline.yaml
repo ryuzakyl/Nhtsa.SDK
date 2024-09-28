@@ -39,7 +39,7 @@ jobs:
         run: dotnet test -c Release --no-build --no-restore
 
       - name: 🛡️ Security scanning with TruffleHog (Filesystem Scan)
-        uses: trufflesecurity/trufflehog-actions-scan@v3
+        uses: trufflesecurity/trufflehog@v3
         with:
           scan: filesystem
           directory: .
